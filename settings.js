@@ -6,9 +6,9 @@ function convertToBool(text, fault = 'true') {
 
 module.exports = {    
 SESSION_ID: process.env.SESSION_ID || 'B70n3b6b#Q0Pts8-LVk95iuf0bBXjTze3NHCKXNbuyL_m7x9CEcE',
-OWNER_NUMBER: process.env.OWNER_NUMBER || "94789123880",
+OWNER_NUMBER: process.env.OWNER_NUMBER || "94772194789",
 ALIVE: process.env.ALIVE || `default`,
-OWNER_NAME: process.env.OWNER_NAME || 'Pathum' ,     
+OWNER_NAME: process.env.OWNER_NAME || 'Dilshan' ,     
 POSTGRESQL_URL: process.env.POSTGRESQL_URL || 'postgres://izumimd_meje_user:0Vhm5vKGZ7ORt2FlJBQf4d6EtRdeuE8z@dpg-cn0o2imn7f5s73fa46q0-a.frankfurt-postgres.render.com/izumimd_meje',
 PREFIX:  process.env.PREFIX || ['.'] ,
 FOOTER: '> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴀᴅʜɪ ᴏꜰᴄ',
