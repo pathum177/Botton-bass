@@ -221,7 +221,7 @@ conn.forwardMessage = async (jid, message, forceForward = false, options = {}) =
 
 
 	      
-let body = ''
+const body = ''
 if (type === 'conversation') {
   body = mek.message.conversation
 } else if (type === 'extendedTextMessage') {
