@@ -221,29 +221,8 @@ conn.forwardMessage = async (jid, message, forceForward = false, options = {}) =
 
 
 	      
-const body = ''
-if (type === 'conversation') {
-  body = mek.message.conversation
-} else if (type === 'extendedTextMessage') {
-  body = mek.message.extendedTextMessage.text
-} else if (type === 'templateButtonReplyMessage') {
-  body = mek.message.templateButtonReplyMessage.selectedId
-} else if (type === 'buttonsResponseMessage') {
-  body = mek.message.buttonsResponseMessage.selectedButtonId
-} else if (type === 'listResponseMessage') {
-  body = mek.message.listResponseMessage.singleSelectReply.selectedRowId
-} else if (type === 'interactiveResponseMessage') {
-  try {
-    const json = JSON.parse(mek.message.interactiveResponseMessage.nativeFlowResponseMessage.paramsJson)
-    body = json.id || ''
-  } catch (e) {
-    body = ''
-  }
-} else if (type === 'imageMessage' && mek.message.imageMessage.caption) {
-  body = mek.message.imageMessage.caption
-} else if (type === 'videoMessage' && mek.message.videoMessage.caption) {
-  body = mek.message.videoMessage.caption
-}
+const body = (type === 'conversation') ? mek.message.conversation : (type === 'extendedTextMessage') ? mek.message.extendedTextMessage.text :(type == 'interactiveResponseMessage' ) ? mek.message.interactiveResponseMessage  && mek.message.interactiveResponseMessage.nativeFlowResponseMessage && JSON.parse(mek.message.interactiveResponseMessage.nativeFlowResponseMessage.paramsJson) && JSON.parse(mek.message.interactiveResponseMessage.nativeFlowResponseMessage.paramsJson).id :(type == 'templateButtonReplyMessage' )? mek.message.templateButtonReplyMessage && mek.message.templateButtonReplyMessage.selectedId  : (type === 'extendedTextMessage') ? mek.message.extendedTextMessage.text : (type == 'imageMessage') && mek.message.imageMessage.caption ? mek.message.imageMessage.caption : (type == 'videoMessage') && mek.message.videoMessage.caption ? mek.message.videoMessage.caption : ''
+  
 
 
 conn.sendPoll = (jid, name = '', values = [], selectableCount = 1) => { return conn.sendMessage(jid, { poll: { name, values, selectableCount }}) }
@@ -705,29 +684,3 @@ app.listen(port, () => console.log(`movie Server listening on port http://localh
 setTimeout(() => {
 connectToWA()
 }, 3000);
-
-// === BUTTON SUPPORT PATCH ===
-
-conn.ev.on('messages.upsert', async ({ messages }) => {
-    const m = messages[0];
-    if (!m.message || m.key.fromMe) return;
-
-    const msgType = getContentType(m.message);
-
-    if (msgType === 'buttonsResponseMessage') {
-        const buttonId = m.message.buttonsResponseMessage.selectedButtonId;
-        m.message = { conversation: buttonId };
-    }
-
-    if (msgType === 'listResponseMessage') {
-        const listId = m.message.listResponseMessage.singleSelectReply.selectedRowId;
-        m.message = { conversation: listId };
-    }
-
-    // Forward to main command handler
-    try {
-        require('./lib/handler')(conn, m); // Adjust if your handler path differs
-    } catch (e) {
-        console.error("Handler error:", e);
-    }
-});
