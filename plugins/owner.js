@@ -1,34 +1,44 @@
 const { cmd } = require('../lib/command');
-const config = require('../settings');
 
 cmd({
-    pattern: "owner",
-    react: "✅", 
-    desc: "Get owner number",
-    category: "main",
-    filename: __filename
-}, 
-async (conn, mek, m, { from }) => {
-    try {
-        const ownerNumber = '94772194789';
-        const ownerName = 'Dilshan Ashinsa';
+  pattern: "owner",
+  desc: "Show bot owner info",
+  category: "main",
+  react: "👨‍💻",
+  filename: __filename
+}, async (conn, m, msg, { prefix }) => {
+  try {
+    const ownerJid = '94773416478@s.whatsapp.net'; // 👈 ඔබගේ real number එක
+    const caption = `*👨‍💻 BOT OWNER INFORMATION:*\n\n👑 *Name:* Pathum Malsara\n📱 *Number:* wa.me/94773416478\n💬 *Contact me if you need help!*\n\n🔰 *Powered by LUXALGO-XD*`;
 
-        const vcard = 'BEGIN:VCARD\n' +
-                      'VERSION:3.0\n' +
-                      `FN:${ownerName}\n` +  
-                      `TEL;type=CELL;type=VOICE;waid=${ownerNumber.replace('+', '')}:${ownerNumber}\n` + 
-                      'END:VCARD';
+    const buttons = [
+      {
+        buttonId: `.menu`,
+        buttonText: { displayText: "📋 Main Menu" },
+        type: 1
+      },
+      {
+        urlButton: {
+          displayText: "👨‍💻 WhatsApp Me",
+          url: "https://wa.me/94773416478"
+        }
+      }
+    ];
 
-        // Only send contact card
-        await conn.sendMessage(from, {
-            contacts: {
-                displayName: ownerName,
-                contacts: [{ vcard }]
-            }
-        });
+    const image = { url: 'https://files.catbox.moe/joo2gt.jpg' }; // optional image
 
-    } catch (error) {
-        console.error(error);
-        reply(`An error occurred: ${error.message}`);
-    }
+    await conn.sendMessage(m.chat, {
+      image,
+      caption,
+      buttons,
+      headerType: 1,
+      viewOnce: true,
+      contextInfo: {
+        mentionedJid: [ownerJid]
+      }
+    }, { quoted: m });
+  } catch (e) {
+    console.error(e);
+    msg.reply("❌ Error showing owner info.");
+  }
 });
