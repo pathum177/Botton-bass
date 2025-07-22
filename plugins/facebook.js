@@ -11,7 +11,7 @@ cmd({
 async (conn, m, msg) => {
   const { from, q } = msg;
 
-  if (!q || !q.startsWith("http://")) return m.reply("🧷 *Please provide a valid Facebook video URL.*");
+  if (!q || !q.startsWith("https://")) return m.reply("🧷 *Please provide a valid Facebook video URL.*");
 
   await m.react("🔍");
 
