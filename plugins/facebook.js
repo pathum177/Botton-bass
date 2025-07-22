@@ -8,11 +8,12 @@ cmd({
   category: "download",
   filename: __filename,
 },
-async (conn, m, msg) => {
-  const { from, q } = msg;
+async(conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+  try {
 
-  if (!q || !q.startsWith("https://")) return m.reply("🧷 *Please provide a valid Facebook video URL.*");
-
+  if (!q || !q.startsWith("https://")) {
+    return conn.sendMessage(from, { text: "❌ Please provide a valid URL." }, { quoted: mek });
+}
   await m.react("🔍");
 
   try {
