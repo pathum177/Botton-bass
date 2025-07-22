@@ -11,9 +11,9 @@ cmd({
 }, 
 async(conn, m, text, { from, reply }) => {
   try {
-    if (!text || !text.startsWith("http")) {
-      return reply('❌ Please provide a valid Facebook URL.');
-    }
+    if (!q || !q.startsWith("https://")) {
+    return conn.sendMessage(from, { text: "❌ Please provide a valid URL." }, { quoted: mek });
+}
 
     await conn.sendMessage(from, { react: { text: "⏬", key: m.key } });
     const result = await getFBInfo(text);
