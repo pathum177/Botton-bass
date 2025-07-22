@@ -70,16 +70,17 @@ const senderName = m.pushName || "User"
             })
         }
     },
-    {
-        urlButton: {
-      displayText: "OWNER 👨‍💻",
-      url: "https://wa.me/94773416478"
-    },
+
     {
         buttonId: ".ping",
         buttonText: { displayText: "PING🧬" },
         type: 1
-    }
+    },
+    {
+        urlButton: {
+      displayText: "OWNER 👨‍💻",
+      url: "https://wa.me/94773416478"
+    }        
 ];
 
 
