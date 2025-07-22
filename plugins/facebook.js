@@ -1,50 +1,83 @@
-const config = require('../settings');
-const { cmd } = require('../lib/command');
+const config = require('../settings')
+const {cmd , commands} = require('../lib/command')
 const getFBInfo = require("@xaviabot/fb-downloader");
 
 cmd({
-  pattern: "fb2",
+  pattern: "fb",
   alias: ["fbdl"],
   desc: "Download Facebook videos",
   category: "download",
   filename: __filename
-}, async (conn, msg, m, { q, reply }) => {
+}, 
+async(conn, m, text, { from, reply }) => {
   try {
-    if (!q || !q.startsWith("http")) return reply("❌ Send a valid Facebook video link!");
+    if (!text || !text.startsWith("http")) {
+      return reply('❌ Please provide a valid Facebook URL.');
+    }
 
-    await conn.sendMessage(msg.chat, { react: { text: "🎬", key: msg.key } });
+    await conn.sendMessage(from, { react: { text: "⏬", key: m.key } });
+    const result = await getFBInfo(text);
 
-    const data = await getFBInfo(q);
-    const title = data?.title || "Facebook Video";
+    const sections = [
+      {
+        title: "📥 Select Download Format",
+        rows: [
+          { title: "1.1 | SD Video", rowId: `.fb_sd ${text}` },
+          { title: "1.2 | HD Video", rowId: `.fb_hd ${text}` },
+          { title: "2.1 | Audio File", rowId: `.fb_audio ${text}` },
+          { title: "2.2 | Audio as Document", rowId: `.fb_doc ${text}` },
+          { title: "2.3 | Voice Note (ptt)", rowId: `.fb_voice ${text}` },
+        ]
+      }
+    ];
 
     const listMessage = {
-      title: "📥 Facebook Video Downloader",
-      text: `*🎞️ Title:* ${title}`,
-      footer: "Select a download format below 👇",
-      buttonText: "🔽 Choose Format",
-      sections: [
-        {
-          title: "🎥 Video",
-          rows: [
-            { title: "HD Quality", description: "High Definition", rowId: `.fbdl hd ${q}` },
-            { title: "SD Quality", description: "Standard Definition", rowId: `.fbdl sd ${q}` }
-          ]
-        },
-        {
-          title: "🎧 Audio",
-          rows: [
-            { title: "Audio File", description: "Send as Audio", rowId: `.fbdl audio ${q}` },
-            { title: "Document", description: "Send as File", rowId: `.fbdl doc ${q}` },
-            { title: "Voice Note", description: "Send as Voice Note", rowId: `.fbdl voice ${q}` }
-          ]
-        }
-      ]
+      text: `🎥 *LUXALGO FB DOWNLOADER* 🎥\n\n📌 Title: ${result.title}`,
+      footer: '💡 Select format from below',
+      title: "🖱️ Click to choose download type",
+      buttonText: "📁 Download Options",
+      sections
     };
 
-    await conn.sendMessage(msg.chat, listMessage, { quoted: msg });
+    await conn.sendMessage(from, listMessage, { quoted: m });
 
   } catch (e) {
     console.error(e);
-    reply("❌ Error fetching video.");
+    reply("⚠️ Error:\n" + e.message);
   }
+});
+
+// ⬇️ Individual format handlers below ⬇️
+
+cmd({ pattern: "fb_sd" }, async(conn, m, text) => {
+  const res = await getFBInfo(text.trim());
+  await conn.sendMessage(m.chat, { video: { url: res.sd }, caption: "✅ *SD Quality Video*" }, { quoted: m });
+});
+
+cmd({ pattern: "fb_hd" }, async(conn, m, text) => {
+  const res = await getFBInfo(text.trim());
+  await conn.sendMessage(m.chat, { video: { url: res.hd }, caption: "✅ *HD Quality Video*" }, { quoted: m });
+});
+
+cmd({ pattern: "fb_audio" }, async(conn, m, text) => {
+  const res = await getFBInfo(text.trim());
+  await conn.sendMessage(m.chat, { audio: { url: res.sd }, mimetype: 'audio/mpeg' }, { quoted: m });
+});
+
+cmd({ pattern: "fb_doc" }, async(conn, m, text) => {
+  const res = await getFBInfo(text.trim());
+  await conn.sendMessage(m.chat, {
+    document: { url: res.sd },
+    mimetype: 'audio/mpeg',
+    fileName: `Luxalgo_FB.mp3`
+  }, { quoted: m });
+});
+
+cmd({ pattern: "fb_voice" }, async(conn, m, text) => {
+  const res = await getFBInfo(text.trim());
+  await conn.sendMessage(m.chat, {
+    audio: { url: res.sd },
+    mimetype: 'audio/mp4',
+    ptt: true
+  }, { quoted: m });
 });
