@@ -33,7 +33,7 @@ cmd({
                 fileEncSha256: "pznYBS1N6gr9RZ66Fx7L3AyLIU2RY5LHCKhxXerJnwQ=",
                 directPath: '/v/t62.7119-24/19392659_857576149596887_4268823484878612019_n.enc?ccb=11-4&oh=01_Q5AaIOQvG2wK688SyUp4JFWqGXhBQT6m5vUcvS2aBi0CXMTv&oe=676AAEC6&_nc_sid=5e03e0',
                 mediaKeyTimestamp: "1715880173",
-                contactVcard: true
+                contactVcard: false
               },
               title: "",
               hasMediaAttachment: true
