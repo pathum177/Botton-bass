@@ -1,11 +1,12 @@
-const config = require('../settings');
+const config = require('../settings')
 const { cmd } = require('../lib/command');
 const { ytsearch } = require('@dark-yasiya/yt-dl.js');
+const fetch = require('node-fetch');
 
 const ytCache = {};
 
 cmd({
-  pattern: 'media5',
+  pattern: 'media ?(.*)',
   react: "🎬",
   desc: 'Download Audio/Video/Doc from YouTube',
   category: 'main',
@@ -23,9 +24,9 @@ cmd({
     const caption = `*🎬 LuxAlgo XD YouTube Downloader 🎬*\n\n📄 *Title:* ${video.title}\n⏱️ *Duration:* ${video.timestamp}\n📌 *Views:* ${video.views}\n👤 *Author:* ${video.author.name}\n🔗 *URL:* ${video.url}\n\n> Select a format below.`;
 
     const buttons = [
-      { title: "🎵 Audio", rowId: `.media audio ${video.id}` },
-      { title: "🎥 Video", rowId: `.media video ${video.id}` },
-      { title: "📄 Document", rowId: `.media doc ${video.id}` }
+      { title: "🎵 Audio", rowId: `.media_dl audio ${video.id}` },
+      { title: "🎥 Video", rowId: `.media_dl video ${video.id}` },
+      { title: "📄 Document", rowId: `.media_dl doc ${video.id}` }
     ];
 
     await conn.sendMessage(from, {
@@ -35,16 +36,17 @@ cmd({
       buttonText: '🧾 Choose Format',
       sections: [{ title: "Available Formats", rows: buttons }]
     }, { quoted: m });
+
   } catch (e) {
     console.log(e);
     reply('❌ Error occurred while searching.');
   }
 });
 
-// Format download handler
-cmd({ pattern: 'media (audio|video|doc) (.+)', onlycmd: true }, async (conn, m, msg, { cmd, reply, from }) => {
+// 📥 Download Handler
+cmd({ pattern: 'media_dl (audio|video|doc) (.+)', onlycmd: true }, async (conn, m, msg, { match, reply, from }) => {
   try {
-    const [, format, id] = m.body.trim().split(' ');
+    const [, format, id] = match;
     const video = ytCache[id];
     if (!video) return reply("❌ Cached video not found. Please search again.");
 
