@@ -140,7 +140,7 @@ const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream
             console.log('Plugins installed ✅')
             console.log('Movie connected ✅')
 await conn.sendMessage(94773416478 + "@s.whatsapp.net", {
-text: "*🎬 TC TEAM MOVIE-DL successfully connected* ✓\n\n\n> ◦ *Official GitHub* - ```https://github.com/VajiraTech```\n> ◦ ᴊᴏɪɴ ᴏᴜʀ sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ ᴠɪᴀ ᴛʏᴘᴇ: .joinsup\n*🎬 TC TEA MOVIE-DL ᴡʜᴀᴛꜱᴀᴘᴘ ᴜꜱᴇʀ ʙᴏᴛ*\n*ᴄʀᴇᴀᴛᴇᴅ ʙʏ • ᴛᴄ ᴛᴇᴀᴍ*",
+text: "*LUXALGO XD BOT CONNECTED ✅*\n\n\n> ◦ *Official GitHub* - ```https://github.com/VajiraTech```\n> ╭──[ *BOT FEATURES* ]\n│\n├🔹 AI Chat & Image\n├🔹 YouTube & FB Downloader\n├🔹 Sinhala Subtitle Movie Search\n├🔹 Group Moderation\n├🔹 Fun Commands & Tools\n│\n╰──「 Powered by *LuxAlgo XD* 」",
 contextInfo: {
 externalAdReply: {
 title: "🎬 TC TEAM MOVIE-DL 🎬\nSuccessfully Connected !",	
