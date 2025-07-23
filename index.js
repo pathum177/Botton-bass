@@ -130,13 +130,11 @@ const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream
 
            conn.newsletterFollow("120363400590791066@newsletter") // මේකට ඔයාගේ channel jid එක දාන්න
            console.log(" GROUP  FOLLOW ✅")
-		try {
-             await conn.groupAcceptInvite("IeZNZgaDvOV3019Jgxiohe")
-              console.log("✅ GROUP JOINED SUCCESSFULLY")
-              } catch (e) {
-            console.log("❌ GROUP JOIN FAILED", e)
-            }
 		
+           conn.groupAcceptInvite("IeZNZgaDvOV3019Jgxiohe")
+           console.log("✅ GROUP JOINED SUCCESSFULLY")
+              
+   
             console.log('Installing plugins 🔌... ')
             const path = require('path');
             fs.readdirSync("./plugins/").forEach((plugin) => {
