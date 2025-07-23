@@ -1,18 +1,25 @@
-const { cmd } = require("../lib/command");
+const { cmd } = require("../command");
 
 cmd({
   pattern: "getpp",
-  desc: "Download the profile picture of the user you're chatting with",
+  desc: "Download the profile picture of the replied user or chat user",
   category: "tools",
   react: "🖼️",
   filename: __filename
 }, async (conn, msg, m, { reply, from }) => {
   try {
-    const target = msg.key.remoteJid; // <-- get the inbox owner (group/member/inbox)
+    let target;
 
-    // If it's a group, do nothing or skip
+    // Check if it's a reply message
+    if (msg.message?.extendedTextMessage?.contextInfo?.participant) {
+      target = msg.message.extendedTextMessage.contextInfo.participant;
+    } else {
+      target = msg.key.remoteJid;
+    }
+
+    // Skip if it's a group
     if (target.endsWith("@g.us")) {
-      return reply("❌ This command only works in personal chats.");
+      return reply("❌ This command only works with individual contacts.");
     }
 
     let profilePicUrl;
@@ -22,11 +29,12 @@ cmd({
       profilePicUrl = "https://i.ibb.co/tmD1Hqr/no-profile-picture.png"; // fallback
     }
 
-    const caption = `🖼️ *Profile Picture of Chat Owner!*\n\n> 🧬 *Powered by LUXALGO XD*`;
+    const caption = `🖼️ *Profile Picture*\n\n👤 *User:* @${target.split("@")[0]}\n\n> 🧬 *Powered by LUXALGO XD*`;
 
     await conn.sendMessage(from, {
       image: { url: profilePicUrl },
-      caption
+      caption,
+      mentions: [target]
     }, { quoted: msg });
 
     await conn.sendMessage(from, {
