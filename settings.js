@@ -14,5 +14,6 @@ PREFIX:  process.env.PREFIX || ['.'] ,
 FOOTER: '> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴀᴅʜɪ ᴏꜰᴄ',
 DIRECTION: true,
 IMAGE: process.env.IMAGE || `https://i.ibb.co/B25Ws4nf/temp-image.jpg`,
+AUTO_STATUS_SEEN: process.env.  AUTO_STATUS_SEEN || 'true',
 LOGO: process.env.LOGO || `https://i.ibb.co/B25Ws4nf/temp-image.jpg`     
 };
