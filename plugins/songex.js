@@ -5,7 +5,7 @@ const { ytsearch } = require('@dark-yasiya/yt-dl.js');
 const ytCache = {};
 
 cmd({
-  pattern: 'media ?(.*)',
+  pattern: 'media5',
   react: "🎬",
   desc: 'Download Audio/Video/Doc from YouTube',
   category: 'main',
