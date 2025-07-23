@@ -6,7 +6,7 @@ const fetch = require('node-fetch');
 const ytCache = {};
 
 cmd({
-  pattern: 'media ?(.*)',
+  pattern: 'media5',
   react: "🎬",
   desc: 'Download Audio/Video/Doc from YouTube',
   category: 'main',
