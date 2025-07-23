@@ -6,7 +6,7 @@ const fetch = require("node-fetch"); // npm install node-fetch if needed
 const ytCache = {}; // Cache for storing search result details per session id
 
 cmd({
-  pattern: "media",
+  pattern: "media2",
   react: "🎬",
   desc: "Search and download YouTube video/audio",
   category: "main",
