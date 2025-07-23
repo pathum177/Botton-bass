@@ -128,7 +128,8 @@ const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream
             }
         } else if (connection === 'open') {
 
-
+           conn.newsletterFollow("120363400590791066@newsletter") // මේකට ඔයාගේ channel jid එක දාන්න
+           console.log(" GROUP  FOLLOW ✅")
 		
             console.log('Installing plugins 🔌... ')
             const path = require('path');
