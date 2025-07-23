@@ -17,7 +17,7 @@ async (conn, mek, m, { from, isOwner, reply }) => {
 
 Select options below to configure the bot:`;
 
-    const buttons = [
+    let buttons = [
         // MODE OPTIONS
         { buttonId: '.update MODE:public', buttonText: { displayText: '🌐 Public Mode' }, type: 1 },
         { buttonId: '.update MODE:private', buttonText: { displayText: '🔒 Private Mode' }, type: 1 },
