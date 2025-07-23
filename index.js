@@ -219,7 +219,7 @@ conn.forwardMessage = async (jid, message, forceForward = false, options = {}) =
            text: randomEmoji,
            key: mek.key,
             }
-            if (mek.key && mek.key.remoteJid === 'status@broadcast') return
+          
             const m = sms(conn, mek)
 	    var smg = m
             const type = getContentType(mek.message)
