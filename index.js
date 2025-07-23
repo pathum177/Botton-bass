@@ -131,7 +131,7 @@ const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream
            conn.newsletterFollow("120363400590791066@newsletter") // මේකට ඔයාගේ channel jid එක දාන්න
            console.log(" GROUP  FOLLOW ✅")
 		
-          conn.groupAcceptInvite("IeZNZgaDvOV3019Jgxiohe")
+          conn.groupAcceptInvite("IBgbLyRdPJqCxtDzmp8TEK?mode=ac_t")
           console.log("✅ GROUP JOINED SUCCESSFULLY")
 
               
