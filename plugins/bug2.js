@@ -1,7 +1,7 @@
 const { cmd } = require('../lib/command')
 
 cmd({
-  pattern: 'bug ?(.*)',
+  pattern: 'bug'
   desc: 'Send a heavy lag message chunked to crash WhatsApp',
   category: 'fun',
   use: '<number>',
