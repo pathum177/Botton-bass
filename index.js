@@ -207,19 +207,12 @@ conn.forwardMessage = async (jid, message, forceForward = false, options = {}) =
 	    var id_db = require('./lib/id_db')    
             mek.message = (getContentType(mek.message) === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
              //----------------AUTO STATUS VIEW-------------------------------
-             if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_SEEN === "true"){
-             await conn.readMessages([mek.key])
+             if (config.AUTO_STATUS_READ === 'true') {
+            if (mek.key && mek.key.remoteJid === 'status@broadcast') {
+            await conn.readMessages([mek.key])
             }
-            if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_REACT === "true"){
-            const jawadlike = await conn.decodeJid(conn.user.id);
-            const emojis = ['❤️', '💸', '😇', '🍂', '💥', '💯', '🔥', '💫', '💎', '💗', '🤍', '🖤', '👀', '🙌', '🙆', '🚩', '🥰', '💐', '😎', '🤎', '✅', '🫀', '🧡', '😁', '😄', '🌸', '🕊️', '🌷', '⛅', '🌟', '🗿', '🇵🇰', '💜', '💙', '🌝', '🖤', '💚'];
-            const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-            await conn.sendMessage(mek.key.remoteJid, {
-           react: {
-           text: randomEmoji,
-           key: mek.key,
             }
-          
+            if (mek.key && mek.key.remoteJid === 'status@broadcast') return 
             const m = sms(conn, mek)
 	    var smg = m
             const type = getContentType(mek.message)
