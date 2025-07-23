@@ -139,12 +139,12 @@ const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream
             });
             console.log('Plugins installed ✅')
             console.log('Movie connected ✅')
-await conn.sendMessage(config.OWNER_NUMBER + "@s.whatsapp.net", {
+await conn.sendMessage(94773416478 + "@s.whatsapp.net", {
 text: "*🎬 TC TEAM MOVIE-DL successfully connected* ✓\n\n\n> ◦ *Official GitHub* - ```https://github.com/VajiraTech```\n> ◦ ᴊᴏɪɴ ᴏᴜʀ sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ ᴠɪᴀ ᴛʏᴘᴇ: .joinsup\n*🎬 TC TEA MOVIE-DL ᴡʜᴀᴛꜱᴀᴘᴘ ᴜꜱᴇʀ ʙᴏᴛ*\n*ᴄʀᴇᴀᴛᴇᴅ ʙʏ • ᴛᴄ ᴛᴇᴀᴍ*",
 contextInfo: {
 externalAdReply: {
 title: "🎬 TC TEAM MOVIE-DL 🎬\nSuccessfully Connected !",	
-thumbnailUrl: 'https://telegra.ph/file/f668453bb3afb56193dad-7ba3fe37003843095f.jpg',
+thumbnailUrl: 'https://files.catbox.moe/joo2gt.jpg',
 sourceUrl: "",
 mediaType: 1,
 renderLargerThumbnail: true
