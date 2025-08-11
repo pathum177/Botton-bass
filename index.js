@@ -69,7 +69,7 @@ const {
 } = require('megajs')
 const path = require('path')
 const msgRetryCounterCache = new NodeCache()
-const ownerNumber = '94772194789'
+const ownerNumber = '94773416478'
 
 
 
