@@ -5,8 +5,8 @@ function convertToBool(text, fault = 'true') {
 }
 
 module.exports = {    
-SESSION_ID: process.env.SESSION_ID || '𝙰𝚂𝙸𝚃𝙷𝙰-𝙼𝙳=1JAghBDI#GPUWj5A1iXb9QPecncEtELLZDKHnQHWQEGRG6ZJSLCU',
-OWNER_NUMBER: process.env.OWNER_NUMBER || "94772194789",
+SESSION_ID: process.env.SESSION_ID || 'YASIYA-MD~ZAAjkRZI#qrTCCxMPeBW-2wwmmM501y9z-LlgzNW1XfRKs6X1VX4',
+OWNER_NUMBER: process.env.OWNER_NUMBER || "94773416478",
 ALIVE: process.env.ALIVE || `default`,
 OWNER_NAME: process.env.OWNER_NAME || 'Dilshan' ,     
 POSTGRESQL_URL: process.env.POSTGRESQL_URL || 'postgres://izumimd_meje_user:0Vhm5vKGZ7ORt2FlJBQf4d6EtRdeuE8z@dpg-cn0o2imn7f5s73fa46q0-a.frankfurt-postgres.render.com/izumimd_meje',
